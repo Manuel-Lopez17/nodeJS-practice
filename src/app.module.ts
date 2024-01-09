@@ -5,6 +5,9 @@ import { UsersController } from './users/users.controller'
 import { UsersService } from './users/users.service'
 import { LoggerModule } from 'nestjs-pino'
 import { CORRELATION_ID_HEADER, CorrelationIdMiddleware } from './correlation-id/correlation-id.middleware'
+import { ConfigModule } from '@nestjs/config'
+import { configLoader } from './users/config-loader'
+import { envSchema } from './users/env-schema'
 
 @Module({
   imports: [
@@ -32,6 +35,10 @@ import { CORRELATION_ID_HEADER, CorrelationIdMiddleware } from './correlation-id
               },
             }
           : undefined,
+    }),
+    ConfigModule.forRoot({
+      load: [configLoader],
+      validationSchema: envSchema,
     }),
   ],
   controllers: [AppController, UsersController],
