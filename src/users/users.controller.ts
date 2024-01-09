@@ -1,9 +1,11 @@
-import { Body, Controller, Get, HttpCode, Param, Patch, Post } from '@nestjs/common'
+import { Body, Controller, Get, HttpCode, Logger, Param, Patch, Post } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dtos/createUserDto'
 
 @Controller('users')
 export class UsersController {
+  private readonly logger = new Logger(UsersController.name)
+
   constructor(private readonly userService: UsersService) {}
 
   @Get()
@@ -20,7 +22,11 @@ export class UsersController {
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
-    return await this.userService.createUser(createUserDto)
+    this.logger.log('Creando usuario en controlador')
+    const user = await this.userService.createUser(createUserDto)
+    this.logger.log('Finalized User in controller')
+
+    return user
   }
 
   @Patch()

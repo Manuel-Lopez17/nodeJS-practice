@@ -1,7 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, Logger, NotFoundException } from '@nestjs/common'
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name)
+
   private users = [{ name: 'manu', id: '1' }]
 
   findAll() {
@@ -18,6 +20,7 @@ export class UsersService {
   }
 
   createUser(userDto: any) {
+    this.logger.log('Creating User')
     return userDto
   }
 }
