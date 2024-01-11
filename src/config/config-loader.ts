@@ -5,5 +5,6 @@ export const configLoader = () => {
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD,
     },
+    api: process.env.API_KEY,
   }
 }
